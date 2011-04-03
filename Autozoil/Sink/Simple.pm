@@ -10,6 +10,7 @@ sub new {
     return bless $self, $class;
 }
 
+
 sub add_mistake {
     my ($self, $mistake) = @_;
 
