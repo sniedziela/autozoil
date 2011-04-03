@@ -1,0 +1,100 @@
+\documentclass[skorowidz, autorrok, backref, xodstep]{wmimgr}
+%\pagestyle{headings}
+
+% Opcjonalnie identyfikator dokumentu (drukowany tylko z włączoną opcją `brudnopis')
+\nrwersji {0.1}
+
+\author   {Roman Grundkiewicz}
+\nralbumu {316826}
+\email    {rg33@st.amu.edu.pl}
+
+\title    {Automatyczne wyszukiwanie i~grupowanie krótkich tekstów narracyjnych zamieszczanych w~Internecie}
+\kierunek {Informatyka}
+\date     {2011}
+\miejsce  {Poznań}
+\opiekun  {dr Filip Graliński}
+
+%
+% Miejsce na deklaracje własnych poleceń:
+\newcommand{\filename}[1]{\texttt{#1}}
+
+\newcommand{\bs}{$\backslash$} 
+\newcommand{\eng}[1]{(ang. \emph{#1})}
+\newcommand{\refsee}[2][]{(zob. #1 \ref{#2})}
+\newcommand{\refcomp}[2][]{(por. #1 \ref{#2})}
+\newcommand{\mypicture}[4][0.2]{
+	\begin{figure}[!htb]
+		\begin{center}
+		\includegraphics[scale=#1]{img/#2}
+		\caption[#3]{\label{#2}\textit{#4}}
+		\end{center}
+	\end{figure}
+}
+\mathchardef\mhyphen="2D
+\newcommand{\tfidf}{$\mathit{ tf \mhyphen idf_{t,d} }$}
+\newcommand{\tfidfraw}{$\mathit{ tf \mhyphen idf }$}
+
+\usepackage{algorithm, algorithmic}
+\usepackage{color}
+\usepackage{todo}
+
+\definecolor{myred}{RGB}{233,93,15}
+\definecolor{mygreen}{RGB}{151,191,13}
+\definecolor{myblue}{RGB}{0,158,224}
+\definecolor{mygray}{gray}{0.75}
+
+\floatname{algorithm}{Algorytm}
+\renewcommand{\listalgorithmname}{Spis algorytmów} 
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\renewcommand{\algorithmicforall}{\textbf{foreach}}
+
+% Cytowanie przez numer (standard):
+%\bibliographystyle{plain} 
+% Jeżeli cytowanie autor-rok to np.:
+%\bibliographystyle{papalike}
+% Inne sposoby
+\bibliographystyle{abbrv}
+
+\begin{document}
+
+%\nocite{Tolkien2011} %% dołącza niecytowany tekst
+
+\begin{abstract}
+  Tutaj będzie streszczenie.
+\end{abstract}
+\keywords{grupowanie, klasteryzacja, wyszukiwanie informacji, k-średnich, wybór centroidów, 
+	przetwarzanie tekstu, teksty narracyjne, legendy miejskie}
+	
+% TODO: dodać angielskie keywords:
+% {documents clustering, information retrieval, k-means, seeds, narrative texts, urban legends} 
+
+\maketitle
+
+\introduction
+Wstęp z~opisem celu i~zakresu pracy.
+
+\chapter{Przegląd zagadnień}
+	\section{Wyszukiwanie informacji}
+	\section{Charakterystyka tekstów narracyjnych}
+	\section{Grupowanie dokumentów}
+	
+% grupowanie wyników wyszukiwania (Manning2009, Weiss2001)
+	
+		\subsection{Systemy grupujące}
+		\subsubsection{Carrot}
+	
+\chapter{Reprezentacja dokumentów w~przestrzeniach wielowymiarowych}
+
+Aby móc grupować dokumenty tekstowe, konieczne jest zastosowanie takiej ich komputerowej reprezentacji, 
+która będzie umożliwiała automatyczne ich porównywanie.
+
+W niniejszym rozdziale szczegółowo opisano model wektorowy oraz techniki budowy bazy przestrzeni cech. 
+Następnie zestawione zostały najpopularniejsze konstrukcje miar odległości w przestrzeniach wielowymiarowych.
+Krótko przedstawiono również alternatywne sposoby reprezentacji dokumentów. 
+
+	\section{Model wektorowy}
+	\label{model-wektorowy}
+	
+Najpopularniejszym sposobem reprezentacji dokumentów jest model wektorowy \eng{VSM, Vector Space Model}
+\cite{Broda2007, Manning2009, Kosmulski2005}.
