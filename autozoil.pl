@@ -7,7 +7,6 @@ require './Autozoil/Sink/Simple.pm';
 require './Autozoil/Sink/Chain.pm';
 require './Autozoil/Sink/Store.pm';
 
-
 my $filename = $ARGV[0];
 
 my $simple_sink = Autozoil::Sink::Simple->new();
