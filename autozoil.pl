@@ -22,7 +22,9 @@ $chain_sink->add_sink($line_adder);
 $chain_sink->add_sink($simple_sink);
 $chain_sink->add_sink($store_sink);
 
-my $checker = Autozoil::Spell->new($chain_sink, 'pl_PL');
+my $iso_dic_name = 'tmp-extra-pl-iso-8859-2';
+prepare_iso_dic();
+my $checker = Autozoil::Spell->new($chain_sink, "pl_PL,$iso_dic_name");
 
 $checker->process($filename);
 
@@ -32,5 +34,9 @@ if ($store_sink->is_ok()) {
 } else {
     print "AUTOZOIL FOUND SOME PROBLEMS\n";
     exit 1;
+}
+
+sub prepare_iso_dic {
+    `iconv -f UTF-8 -t ISO-8859-2 < extra-pl.dic > ${iso_dic_name}.dic`;
 }
 
