@@ -22,7 +22,7 @@ $chain_sink->add_sink($line_adder);
 $chain_sink->add_sink($simple_sink);
 $chain_sink->add_sink($store_sink);
 
-my $checker = Autozoil::Spell->new($chain_sink);
+my $checker = Autozoil::Spell->new($chain_sink, 'pl_PL');
 
 $checker->process($filename);
 

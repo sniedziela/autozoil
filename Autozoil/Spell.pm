@@ -4,10 +4,11 @@ package Autozoil::Spell;
 use strict;
 
 sub new {
-    my ($class, $sink) = @_;
+    my ($class, $sink, $language) = @_;
 
     my $self = {
-        'sink' => $sink
+        'sink' => $sink,
+        'language' => $language
     };
 
     return bless $self, $class;
@@ -18,7 +19,8 @@ sub process {
 
     $self->{'line_number'} = 0;
 
-    open my $spellh, qq{echo '!' | cat - "$filename" | sed 's/^/^/' | hunspell -t -a |};
+    my $language = $self->{'language'};
+    open my $spellh, qq{echo '!' | cat - "$filename" | sed 's/^/^/' | hunspell -d $language -t -a |};
 
     while (my $line=<$spellh>) {
         chomp $line;
