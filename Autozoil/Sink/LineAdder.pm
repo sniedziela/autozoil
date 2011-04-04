@@ -1,4 +1,4 @@
-package Autozoil::Lines;
+package Autozoil::Sink::LineAdder;
 
 use strict;
 
@@ -6,7 +6,7 @@ sub new {
     my ($class, $filename) = @_;
 
     my $self = {
-        'lines' => read_lines($filename),
+        'lines' => [read_lines($filename)],
     } ;
 
     return bless $self, $class;

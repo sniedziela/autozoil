@@ -16,7 +16,7 @@ sub new {
 sub process {
     my ($self, $filename) = @_;
 
-    $self->{'line_number'} = 1;
+    $self->{'line_number'} = -1;
 
     open my $spellh, qq{hunspell -t -a "$filename" |};
 

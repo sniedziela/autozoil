@@ -2,17 +2,23 @@
 
 use strict;
 
-require './Autozoil/Spell.pm';
-require './Autozoil/Sink/Simple.pm';
-require './Autozoil/Sink/Chain.pm';
-require './Autozoil/Sink/Store.pm';
+BEGIN {
+    push @INC, `pwd`;
+}
 
+use Autozoil::Spell;
+use Autozoil::Sink::Simple;
+use Autozoil::Sink::Chain;
+use Autozoil::Sink::Store;
+use Autozoil::Sink::LineAdder;
 
 my $filename = $ARGV[0];
 
 my $simple_sink = Autozoil::Sink::Simple->new();
 my $store_sink = Autozoil::Sink::Store->new();
 my $chain_sink = Autozoil::Sink::Chain->new();
+my $line_adder = Autozoil::Sink::LineAdder->new($filename);
+$chain_sink->add_sink($line_adder);
 $chain_sink->add_sink($simple_sink);
 $chain_sink->add_sink($store_sink);
 
