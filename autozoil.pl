@@ -27,8 +27,10 @@ my $checker = Autozoil::Spell->new($chain_sink);
 $checker->process($filename);
 
 if ($store_sink->is_ok()) {
+    print "AUTOZOIL FOUND NO PROBLEMS, CONGRATS!\n";
     exit 0;
 } else {
+    print "AUTOZOIL FOUND SOME PROBLEMS\n";
     exit 1;
 }
 
