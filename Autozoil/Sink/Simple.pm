@@ -14,11 +14,19 @@ sub new {
 sub add_mistake {
     my ($self, $mistake) = @_;
 
-    print join("\t",
-               $mistake->{'line_number'},
+    print join(" *** ",
+               clean_filename($mistake->{'filename'}) . ' ' . $mistake->{'line_number'},
                $mistake->{'frag'},
-               $mistake->{'comment'},
-               $mistake->{'original_line'}),"\n";
+               $mistake->{'original_line'},
+               $mistake->{'comment'}),"\n";
+}
+
+sub clean_filename {
+    my ($filename) = @_;
+
+    $filename =~ s{^(.*)/}{};
+
+    return $filename;
 }
 
 1;

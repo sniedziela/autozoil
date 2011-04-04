@@ -16,9 +16,9 @@ sub new {
 sub process {
     my ($self, $filename) = @_;
 
-    $self->{'line_number'} = -1;
+    $self->{'line_number'} = 0;
 
-    open my $spellh, qq{hunspell -t -a "$filename" |};
+    open my $spellh, qq{echo '!' | cat - "$filename" | sed 's/^/^/' | hunspell -t -a |};
 
     while (my $line=<$spellh>) {
         chomp $line;
