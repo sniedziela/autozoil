@@ -7,6 +7,7 @@ BEGIN {
 }
 
 use Autozoil::Spell;
+use Autozoil::Chktex;
 use Autozoil::Sink::Simple;
 use Autozoil::Sink::Chain;
 use Autozoil::Sink::Store;
@@ -24,9 +25,15 @@ $chain_sink->add_sink($store_sink);
 
 my $iso_dic_name = 'tmp-extra-pl-iso-8859-2';
 prepare_iso_dic();
-my $checker = Autozoil::Spell->new($chain_sink, "pl_PL,$iso_dic_name");
+my @checkers = 
+    (Autozoil::Spell->new($chain_sink, "pl_PL,$iso_dic_name"),
+     Autozoil::Chktex->new($chain_sink));
 
-$checker->process($filename);
+print "STARTING AUTOZOIL\n";
+
+for my $checker (@checkers) {
+    $checker->process($filename);
+}
 
 if ($store_sink->is_ok()) {
     print "AUTOZOIL FOUND NO PROBLEMS, CONGRATS!\n";
