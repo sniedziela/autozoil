@@ -27,7 +27,7 @@ sub process {
     $self->{'line_number'} = 0;
 
     my $language = $self->{'language'};
-    open my $spellh, qq{echo '!' | cat - "$filename" | perl -pne 's/\\\\(eng|ulurl|nolinkurl){[^{}]*}/ /' | sed 's/^/^/' | hunspell -d $language -t -a |};
+    open my $spellh, qq{echo '!' | cat - "$filename" | perl -pne 's/\\\\(eng|ulurl|nolinkurl|reftext|mypicture){[^{}]*}/ /' | sed 's/^/^/' | hunspell -d $language -t -a |};
 
     while (my $line=<$spellh>) {
         chomp $line;
