@@ -22,7 +22,7 @@ crawler/NOTs
 Niebezpiecznik/NOTs
 TinyURL
 Egothor
-Morfologik
+morfologik
 Stempelator
 Beet
 TaKIPI
@@ -41,8 +41,12 @@ RI
 HDC
 WEBSOM
 buckshot
-Silhouette
-Zamir/NQTs
+words
+complete
+strict
+purity
+medioids
+medians
 lematyzacja/AMNn
 inicjalizacja/AMNn
 bigram/NOTs
@@ -50,7 +54,24 @@ unigram/NOTs
 tager/NOTs
 kosinusowy/XYbx
 synset/NOTs
-
-
+ustrukturyzować/BEGHJej
+regułowy/XYbx
+realizowalny/XYbx
+centroid/NQTs
+zainicjalizować/BEHJej
+samoorganizujące/a
+stemmer/NOTs
+Jaccard/NOTs
+stemming/O
+Silhouette
+Zamir/NQTs
+Levenshtein/NOTos
+Damerau
+Dice
+Manning
+zaszumione
+nierealizowalne
+nieustrukturyzowany
+iteracyjno
 
 
