@@ -7,6 +7,7 @@ my %latex_false_positives = map { $_ => 1 } split/\n/,<< 'END_OF_LFP';
 htb
 H
 hH
+ht
 END_OF_LFP
 
 sub new {
@@ -26,7 +27,7 @@ sub process {
     $self->{'line_number'} = 0;
 
     my $language = $self->{'language'};
-    open my $spellh, qq{echo '!' | cat - "$filename" | perl -pne 's/\\\\eng{[^{}]*}/ /' | sed 's/^/^/' | hunspell -d $language -t -a |};
+    open my $spellh, qq{echo '!' | cat - "$filename" | perl -pne 's/\\\\(eng|nolinkurl){[^{}]*}/ /' | sed 's/^/^/' | hunspell -d $language -t -a |};
 
     while (my $line=<$spellh>) {
         chomp $line;
