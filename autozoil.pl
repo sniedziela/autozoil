@@ -6,6 +6,8 @@ BEGIN {
     push @INC, `pwd`;
 }
 
+binmode(STDOUT,':utf8');
+
 use Autozoil::Spell;
 use Autozoil::Chktex;
 use Autozoil::Languagetool;
