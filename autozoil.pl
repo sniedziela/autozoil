@@ -8,6 +8,7 @@ BEGIN {
 
 use Autozoil::Spell;
 use Autozoil::Chktex;
+use Autozoil::Languagetool;
 use Autozoil::Sink::Simple;
 use Autozoil::Sink::Chain;
 use Autozoil::Sink::Store;
@@ -25,9 +26,10 @@ $chain_sink->add_sink($store_sink);
 
 my $iso_dic_name = 'tmp-extra-pl-iso-8859-2';
 prepare_iso_dic();
-my @checkers = 
+my @checkers =
     (Autozoil::Spell->new($chain_sink, "pl_PL,$iso_dic_name"),
-     Autozoil::Chktex->new($chain_sink));
+     Autozoil::Chktex->new($chain_sink),
+     Autozoil::Languagetool->new($chain_sink, 'pl'));
 
 print "STARTING AUTOZOIL\n";
 

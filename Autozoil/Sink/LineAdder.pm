@@ -17,6 +17,7 @@ sub read_lines {
     my ($filename) = @_;
 
     open my $fh,'<',$filename;
+    binmode($fh,':utf8');
 
     my @lines;
 
