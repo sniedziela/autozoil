@@ -27,6 +27,9 @@ Stempelator
 Beet
 TaKIPI
 SGJP
+Aspell
+Hunspell
+Ispell
 POS
 PAM
 CURE
@@ -40,6 +43,7 @@ F
 RI
 HDC
 WEBSOM
+CLEAR
 buckshot
 words
 complete
@@ -53,7 +57,7 @@ bigram/NOTs
 unigram/NOTs
 tager/NOTs
 kosinusowy/XYbx
-synset/NOTs
+synset/NQTs
 ustrukturyzować/BEGHJej
 regułowy/XYbx
 realizowalny/XYbx
@@ -62,6 +66,8 @@ medoid/NQTs
 zainicjalizować/BEHJej
 samoorganizujące/a
 stemmer/NOTs
+Wikisłownik/NOTs
+Słowisieć/MN
 Jaccard/NOTs
 stemming/O
 Silhouette
