@@ -20,12 +20,15 @@ sub process {
 
     my $sink = $self->{'sink'};
     my $state = 'WARNING';
+    my $empty_line = 0;
     my $current_mistake;
 
     while (my $line=<$chktexh>) {
         chomp $line;
 
         if ($state eq 'WARNING') {
+            $empty_line = 0;
+
             if (my ($line_number, $comment) = ($line =~ /^Warning \d+ in .*? line (\d+): (.*)$/)) {
                 $current_mistake = {
                     'line_number' => $line_number,
@@ -41,6 +44,10 @@ sub process {
         }
         elsif ($state eq 'LINE') {
             $state = 'POSITION';
+
+            if ($line eq q{}) {
+                $empty_line = 1;
+            }
         }
         elsif ($state eq 'POSITION') {
             if (my ($pre_spaces, $warning_region) = ($line =~ /^( *)(\^+)$/)) {
@@ -50,6 +57,9 @@ sub process {
                 $current_mistake->{'beg'} = $beg;
                 $current_mistake->{'end'} = $beg + $len;
 
+                $sink->add_mistake($current_mistake);
+            }
+            elsif ($empty_line && $line eq q{}) {
                 $sink->add_mistake($current_mistake);
             }
             else {
