@@ -26,6 +26,7 @@ cmp_deeply(
          'line_number' => 8,
          'beg' => 17,
          'end' => 18,
+         'label' => 8,
      },
      {
          'type' => 'latex',
@@ -33,11 +34,13 @@ cmp_deeply(
          'line_number' => 6,
          'beg' => 8,
          'end' => 9,
+         'label' => 15,
      },
      {
          'type' => 'latex',
          'comment' => q{Number of `(' doesn't match the number of `)'!},
          'line_number' => 9,
+         'label' => 17
      },
     ]);
 

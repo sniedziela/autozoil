@@ -15,7 +15,7 @@ sub add_mistake {
     my ($self, $mistake) = @_;
 
     print join(" *** ",
-               $mistake->{'type'},
+               $mistake->{'type'}.'-'.$mistake->{'label'},
                clean_filename($mistake->{'filename'}) . ' ' . $mistake->{'line_number'},
                $mistake->{'frag'},
                $mistake->{'original_line'},

@@ -58,6 +58,7 @@ sub process_spell_mistake_line {
                 'end' => $col + length($word),
                 'comment' => $comment,
                 'type' => 'spell',
+                'label' => $word,
             });
         }
     } elsif (my ($word, $col) = ($line =~ /^\# (\S+) (\d+)$/)) {
@@ -68,6 +69,7 @@ sub process_spell_mistake_line {
                 'beg' => $col,
                 'end' => $col + length($word),
                 'type' => 'spell',
+                'label' => $word,
             });
         }
     } else {

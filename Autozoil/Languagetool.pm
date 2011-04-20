@@ -60,7 +60,8 @@ sub process_error {
         'beg' => $error->{'fromx'},
         'end' => $error->{'tox'},
         'comment' => $error->{'ruleId'} .': '. $error->{'msg'} . ' ['. $error->{'replacements'} .']',
-        'type' => 'grammar'
+        'type' => 'grammar',
+        'label' => $error->{'ruleId'},
     });
 }
 

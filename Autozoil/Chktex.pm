@@ -29,11 +29,12 @@ sub process {
         if ($state eq 'WARNING') {
             $empty_line = 0;
 
-            if (my ($line_number, $comment) = ($line =~ /^Warning \d+ in .*? line (\d+): (.*)$/)) {
+            if (my ($warning_number, $line_number, $comment) = ($line =~ /^Warning (\d+) in .*? line (\d+): (.*)$/)) {
                 $current_mistake = {
                     'line_number' => $line_number,
                     'comment' => $comment,
-                    'type' => 'latex'
+                    'type' => 'latex',
+                    'label' => $warning_number,
                 }
             }
             else {
