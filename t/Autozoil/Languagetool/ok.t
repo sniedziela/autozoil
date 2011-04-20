@@ -13,7 +13,7 @@ use Autozoil::Sink::Store;
 my $store_sink = Autozoil::Sink::Store->new();
 my $checker = Autozoil::Languagetool->new($store_sink, 'pl');
 
-$checker->process('ok.tex');
+$checker->process('Autozoil/Languagetool/ok.tex');
 
 ok($store_sink->is_ok());
 

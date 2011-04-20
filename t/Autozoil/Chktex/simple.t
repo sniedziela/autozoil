@@ -13,7 +13,7 @@ use Autozoil::Sink::Store;
 my $store_sink = Autozoil::Sink::Store->new();
 my $checker = Autozoil::Chktex->new($store_sink);
 
-$checker->process('simple.tex');
+$checker->process('Autozoil/Chktex/simple.tex');
 
 ok(!$store_sink->is_ok());
 
