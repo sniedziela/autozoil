@@ -36,7 +36,7 @@ for my $checker (@checkers) {
     $checker->process($filename);
 }
 
-print STDERR Dumper([$store_sink->get_all_mistakes()]),"\n";
+#print STDERR Dumper([$store_sink->get_all_mistakes()]),"\n";
 
 ok($store_sink->is_ok());
 
