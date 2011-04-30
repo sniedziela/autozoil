@@ -15,6 +15,8 @@ sub new {
 sub add_mistake {
     my ($self, $mistake) = @_;
 
+    return if $mistake->{'suppressed'};
+
     push @{$self->{'mistakes'}}, $mistake;
 }
 

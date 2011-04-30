@@ -12,7 +12,8 @@ sub parse {
 
     my @suppressions;
 
-    open my $fh,'<',$filename;
+    open my $fh,'<',$filename 
+        or die "cannot open file '$filename'";
     binmode($fh,':utf8');
 
     my $line_number = 1;
@@ -34,7 +35,7 @@ sub parse_line {
 
     my @raw_suppressions;
 
-    if (my ($type, $spec) = ($line =~ m{ % \s+ -- ([|<>]) (.*) $ }x)) {
+    if (my ($type, $spec) = ($line =~ m{ % \s* -- ([|<>]) (.*) $ }x)) {
 
         my @labels = map { String::Util::crunch($_) } split/\s*,\s*/,$spec;
 

@@ -62,5 +62,11 @@ cmp_deeply(
          'line_to' => 22,
          'expected' => 1
      },
+     {
+         'label' => 'spell-zpacji',
+         'line_from' => 24,
+         'line_to' => 24,
+         'expected' => 1
+     },
     ]);
 
