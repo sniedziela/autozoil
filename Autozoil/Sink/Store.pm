@@ -26,6 +26,12 @@ sub get_all_mistakes {
     return @{$self->{'mistakes'}};
 }
 
+sub get_number_of_problems {
+    my ($self) = @_;
+
+    return $#{$self->{'mistakes'}} + 1;
+}
+
 sub is_ok {
     my ($self) = @_;
 

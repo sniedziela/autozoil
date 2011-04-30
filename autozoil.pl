@@ -53,7 +53,7 @@ if ($store_sink->is_ok()) {
     print "AUTOZOIL FOUND NO PROBLEMS, CONGRATS!\n";
     exit 0;
 } else {
-    print "AUTOZOIL FOUND SOME PROBLEMS\n";
+    print "AUTOZOIL FOUND ". $store_sink->get_number_of_problems()  ." PROBLEMS\n";
     exit 1;
 }
 
