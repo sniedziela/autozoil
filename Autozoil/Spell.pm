@@ -8,6 +8,8 @@ htb
 H
 hH
 ht
+h
+tp
 END_OF_LFP
 
 sub new {

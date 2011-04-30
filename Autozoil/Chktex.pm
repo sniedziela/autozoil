@@ -3,6 +3,10 @@ package Autozoil::Chktex;
 
 use strict;
 
+my %UNWANTED_WARNINGS = map { $_ => 1 } split/\n/,<< 'END_OF_UW';
+1
+END_OF_UW
+
 sub new {
     my ($class, $sink) = @_;
 
@@ -22,6 +26,7 @@ sub process {
     my $state = 'WARNING';
     my $empty_line = 0;
     my $current_mistake;
+    my $current_line;
 
     while (my $line=<$chktexh>) {
         chomp $line;
@@ -46,6 +51,8 @@ sub process {
         elsif ($state eq 'LINE') {
             $state = 'POSITION';
 
+            $current_line = $line;
+
             if ($line eq q{}) {
                 $empty_line = 1;
             }
@@ -58,10 +65,10 @@ sub process {
                 $current_mistake->{'beg'} = $beg;
                 $current_mistake->{'end'} = $beg + $len;
 
-                $sink->add_mistake($current_mistake);
+                $self->handle_mistake($current_mistake, $current_line);
             }
             elsif ($empty_line && $line eq q{}) {
-                $sink->add_mistake($current_mistake);
+                $self->handle_mistake($current_mistake, $current_line);
             }
             else {
                 unexpected_line($line, $state);
@@ -72,10 +79,29 @@ sub process {
     }
 }
 
+sub handle_mistake {
+    my ($self,  $mistake, $current_line) = @_;
+
+    my $sink = $self->{'sink'};
+
+    if (!$self->is_unwanted_warning($mistake, $current_line)) {
+        $sink->add_mistake($mistake);
+    }
+}
+
+sub is_unwanted_warning {
+    my ($self, $mistake, $current_line) = @_;
+    
+    return
+        $UNWANTED_WARNINGS{$mistake->{'label'}} 
+        || $mistake->{'label'} == 8 && $current_line =~ / -- /
+        || $mistake->{'label'} == 26 && $current_line =~ / ,,/
+}
+
 sub unexpected_line {
    my ($line, $state) = @_; 
 
-   die "unexpected line in chktex output: $line [state: $state]";   
+   die "unexpected line in chktex output: $line [state: $state]";
 }
 
 1;
