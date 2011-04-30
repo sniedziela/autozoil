@@ -37,7 +37,7 @@ cmp_deeply(
          'label'  => 'grammar-ODNOSNIE',
          'line_from' => 10,
          'line_to' => 14,
-         'expected' => 3,
+         'expected' => 1,
      },
      {
          'label'  => '???',

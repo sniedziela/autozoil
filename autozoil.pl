@@ -11,6 +11,7 @@ binmode(STDOUT,':utf8');
 use Autozoil::Spell;
 use Autozoil::Chktex;
 use Autozoil::Languagetool;
+use Autozoil::Suppressor;
 use Autozoil::Sink::Simple;
 use Autozoil::Sink::Chain;
 use Autozoil::Sink::Store;
@@ -22,7 +23,9 @@ my $simple_sink = Autozoil::Sink::Simple->new();
 my $store_sink = Autozoil::Sink::Store->new();
 my $chain_sink = Autozoil::Sink::Chain->new();
 my $line_adder = Autozoil::Sink::LineAdder->new($filename);
+my $suppressor = Autozoil::Suppressor->new($filename);
 $chain_sink->add_sink($line_adder);
+$chain_sink->add_sink($suppressor);
 $chain_sink->add_sink($simple_sink);
 $chain_sink->add_sink($store_sink);
 
@@ -38,6 +41,13 @@ print "STARTING AUTOZOIL\n";
 for my $checker (@checkers) {
     $checker->process($filename);
 }
+
+my $post_chain_sink = Autozoil::Sink::Chain->new();
+$post_chain_sink->add_sink($line_adder);
+$post_chain_sink->add_sink($simple_sink);
+$post_chain_sink->add_sink($store_sink);
+$suppressor->postcheck($post_chain_sink);
+
 
 if ($store_sink->is_ok()) {
     print "AUTOZOIL FOUND NO PROBLEMS, CONGRATS!\n";

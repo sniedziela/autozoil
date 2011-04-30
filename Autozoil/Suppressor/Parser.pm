@@ -5,8 +5,6 @@ use strict;
 use String::Util;
 use Data::Dumper;
 
-my $MULTI_LINE_EXPECTED = 3;
-
 sub parse {
     my ($filename) = @_;
 
@@ -61,7 +59,7 @@ sub merge_suppressions {
         if ($raw_suppression->{'type'} eq '|') {
             push @{$suppressions_ref}, {
                 'label' => $raw_suppression->{'label'},
-                'expected' => 1,
+                'expected' => get_expected($raw_suppression->{'label'}),
                 'line_from' => $line_number,
                 'line_to' => $line_number,
             }
@@ -69,7 +67,7 @@ sub merge_suppressions {
         elsif ($raw_suppression->{'type'} eq '<') {
             push @{$suppressions_ref}, {
                 'label' => $raw_suppression->{'label'},
-                'expected' => $MULTI_LINE_EXPECTED,
+                'expected' => get_expected($raw_suppression->{'label'}),
                 'line_from' => $line_number,
                 'line_to' => '?'
             }
@@ -81,6 +79,16 @@ sub merge_suppressions {
             die "unexpected suppressions type - $raw_suppression->{type}";
         }
     }
+}
+
+sub get_expected {
+    my ($label) = @_;
+    
+    if ($label =~ /-\*$/) {
+        return 3;
+    }
+
+    return 1;
 }
 
 sub close_multiline_suppressions {

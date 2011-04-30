@@ -36,6 +36,11 @@ for my $checker (@checkers) {
     $checker->process($filename);
 }
 
+my $post_chain_sink = Autozoil::Sink::Chain->new();
+$post_chain_sink->add_sink($line_adder);
+$post_chain_sink->add_sink($store_sink);
+$suppressor->postcheck($post_chain_sink);
+
 #print STDERR Dumper([$store_sink->get_all_mistakes()]),"\n";
 
 ok($store_sink->is_ok());

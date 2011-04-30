@@ -28,6 +28,7 @@ sub process {
 
     my $language = $self->{'language'};
     open my $spellh, qq{echo '!' | cat - "$filename" | perl -pne 's/\\\\(eng|ulurl|nolinkurl|reftext|mypicture){[^{}]*}/ /' | sed 's/^/^/' | hunspell -d $language -t -a |};
+    binmode($spellh,':utf8');
 
     while (my $line=<$spellh>) {
         chomp $line;

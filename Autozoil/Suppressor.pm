@@ -38,6 +38,40 @@ sub add_mistake {
     }
 }
 
+sub postcheck {
+    my ($self, $sink) = @_;
+
+    my @suppressions = @{$self->{'suppressions'}};
+
+    for my $suppression (@suppressions) {
+        if ($suppression->{'line_from'} eq '?') {
+            $sink->add_mistake({
+                'line_number' => $suppression->{'line_to'},
+                'comment' => 'closing suppression without an opening one',
+                'type' => 'suppressor',
+                'label' => 'NO_OPENING'});
+        } elsif ($suppression->{'line_to'} eq '?') {
+            $sink->add_mistake({
+                'line_number' => $suppression->{'line_from'},
+                'comment' => 'opening suppression without a closing one',
+                'type' => 'suppressor',
+                'label' => 'NO_CLOSING'});
+        } elsif (!$suppression->{'got'}) {
+            $sink->add_mistake({
+                'line_number' => $suppression->{'line_from'},
+                'comment' => qq{no problem was found for suppression '$suppression->{label}'},
+                'type' => 'suppressor',
+                'label' => 'NO_PROBLEM'});
+        } elsif ($suppression->{'got'} < $suppression->{'expected'}) {
+            $sink->add_mistake({
+                'line_number' => $suppression->{'line_from'},
+                'comment' => qq{two few problems found for suppression '$suppression->{label}' (should be at least $suppression->{expected}, found $suppression->{got})},
+                'type' => 'suppressor',
+                'label' => 'TOO_FEW_PROBLEMS'});
+        }
+    }
+}
+
 sub try_suppress {
     my ($self, $mistake, $suppression) = @_;
 
@@ -48,6 +82,7 @@ sub try_suppress {
         && $mistake->{'line_number'} <= $suppression->{'line_to'}) {
 
         $mistake->{'suppressed'} = 1;
+        ++$suppression->{'got'};
         return 1;
     }
 

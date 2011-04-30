@@ -27,7 +27,8 @@ specyfikacja to:
   wyciszenie wszystkich błędów danego typu (np. spell-*).
 
 Uwaga: jeśli zostanie napotkane uciszenie, dla którego błąd wcale nie
-wystąpił (zbędne uciszenie), jest to zgłaszane jako błąd!
+wystąpił (zbędne uciszenie), jest to zgłaszane jako błąd! W przypadku
+specyfikacji z '*' muszą wystąpić przynajmniej 3 błędy.
 
 
 
