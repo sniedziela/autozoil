@@ -4,6 +4,7 @@ package Autozoil::Languagetool;
 use strict;
 
 use XML::Simple;
+use FileHandle;
 use Data::Dumper;
 
 my @unwanted_errors = split/\n/,<< 'END_OF_UNWANTED_ERRORS';

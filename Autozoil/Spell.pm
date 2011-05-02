@@ -5,6 +5,7 @@ use strict;
 
 my %latex_false_positives = map { $_ => 1 } split/\n/,<< 'END_OF_LFP';
 htb
+htbp
 H
 hH
 ht
@@ -29,7 +30,7 @@ sub process {
     $self->{'line_number'} = 0;
 
     my $language = $self->{'language'};
-    open my $spellh, qq{echo '!' | cat - "$filename" | perl -pne 's/\\\\(eng|english|ulurl|nolinkurl|reftext|mypicture){[^{}]*}/ /' | sed 's/^/^/' | hunspell -d $language -t -a |};
+    open my $spellh, qq{echo '!' | cat - "$filename" | perl -pne 's/\\\\(eng|english|ulurl|nolinkurl|reftext|mypicture|lstset){[^{}]*}/ /g' | sed 's/^/^/' | hunspell -d $language -t -a |};
     binmode($spellh,':utf8');
 
     while (my $line=<$spellh>) {
