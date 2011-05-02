@@ -17,7 +17,20 @@ use Autozoil::Sink::Chain;
 use Autozoil::Sink::Store;
 use Autozoil::Sink::LineAdder;
 
+use Getopt::Long;
+
+my $locale;
+
+GetOptions(
+    'locale:s' => \$locale,
+    'help' => \&help
+) or die "wrong argument, type -h for help\n";
+
 my $filename = $ARGV[0];
+
+if (!defined($locale)) {
+    $locale = 'pl_PL';
+}
 
 my $simple_sink = Autozoil::Sink::Simple->new();
 my $store_sink = Autozoil::Sink::Store->new();
@@ -29,12 +42,26 @@ $chain_sink->add_sink($suppressor);
 $chain_sink->add_sink($simple_sink);
 $chain_sink->add_sink($store_sink);
 
+my $spell_dictionaries = $locale;
 my $iso_dic_name = 'tmp-extra-pl-iso-8859-2';
-prepare_iso_dic();
+
+if ($locale eq 'pl_PL') {
+    $spell_dictionaries = "pl_PL,$iso_dic_name";
+    prepare_iso_dic();
+}
+
+my $lang;
+
+if ($locale =~ /^([^_]+)_/) {
+    $lang = $1;
+} else {
+    die "unexpected locale '$locale'"
+}
+
 my @checkers =
-    (Autozoil::Spell->new($chain_sink, "pl_PL,$iso_dic_name"),
+    (Autozoil::Spell->new($chain_sink, $spell_dictionaries),
      Autozoil::Chktex->new($chain_sink),
-     Autozoil::Languagetool->new($chain_sink, 'pl'));
+     Autozoil::Languagetool->new($chain_sink, $lang));
 
 print "STARTING AUTOZOIL\n";
 
@@ -61,3 +88,7 @@ sub prepare_iso_dic {
     `iconv -f UTF-8 -t ISO-8859-2 < extra-pl.dic > ${iso_dic_name}.dic`;
 }
 
+sub help {
+    print STDERR "USAGE: perl autozoil.pl filename.tex --locale pl_PL\n";
+    exit 1
+}
