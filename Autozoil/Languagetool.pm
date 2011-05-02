@@ -55,6 +55,12 @@ sub process {
 sub process_error {
     my ($self, $error) = @_;
 
+    return if 
+        $error->{'ruleId'} eq 'SKROTY_Z_KROPKA' && $error->{'msg'} =~ /'pl\.'/
+        || 
+        $error->{'ruleId'} eq 'BRAK_SPACJI' && $error->{'msg'} =~ /': '/
+            && $error->{'context'} =~ m{http://};
+
     my $sink = $self->{'sink'};
 
     $sink->add_mistake({
