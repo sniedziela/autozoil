@@ -30,7 +30,7 @@ sub process {
     $self->{'line_number'} = 0;
 
     my $language = $self->{'language'};
-    open my $spellh, qq{echo '!' | cat - "$filename" | perl -pne 's/\\\\(eng|english|ulurl|nolinkurl|reftext|mypicture|lstset){[^{}]*}/ /g' | sed 's/^/^/' | hunspell -d $language -t -a |};
+    open my $spellh, qq{echo '!' | cat - "$filename" | perl -pne 's/\\\\(eng|english|ulurl|nolinkurl|reftext|mypicture|lstset|code){[^{}]*}/ /g' | sed 's/^/^/' | hunspell -d $language -t -a |};
     binmode($spellh,':utf8');
 
     while (my $line=<$spellh>) {
