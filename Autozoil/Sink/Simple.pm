@@ -14,6 +14,8 @@ sub new {
 sub add_mistake {
     my ($self, $mistake) = @_;
 
+    return if $mistake->{'suppressed'};
+
     print join(" *** ",
                $mistake->{'type'}.'-'.$mistake->{'label'},
                clean_filename($mistake->{'filename'}) . ' ' . $mistake->{'line_number'},
