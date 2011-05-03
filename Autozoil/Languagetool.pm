@@ -37,7 +37,9 @@ sub process {
     $tmp_file .= '.txt';
     my $out_tmp_file = `mktemp`;
     chomp $out_tmp_file;
-    `detex -l "$filename" > "$tmp_file"`;
+    my $two_backslashes_quoted = q{\\\\\\\\};
+    my $two_spaces = q{  };
+    `perl -pne 's{$two_backslashes_quoted}{$two_spaces}g' < "$filename" | detex -l - > "$tmp_file"`;
 
     # languagetool output has to processed because of some bug in
     # languagetool
