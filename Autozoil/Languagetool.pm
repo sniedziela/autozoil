@@ -39,6 +39,8 @@ sub process {
     chomp $out_tmp_file;
     my $two_backslashes_quoted = q{\\\\\\\\};
     my $two_spaces = q{  };
+    # detex zamienia \\ na znak końca wiersza, co psuje zgodność
+    # numeracji wierszy, musimy to naprawić
     `perl -pne 's{$two_backslashes_quoted}{$two_spaces}g' < "$filename" | detex -l - > "$tmp_file"`;
 
     # languagetool output has to processed because of some bug in
