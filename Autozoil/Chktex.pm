@@ -5,6 +5,7 @@ use strict;
 
 my %UNWANTED_WARNINGS = map { $_ => 1 } split/\n/,<< 'END_OF_UW';
 1
+13
 END_OF_UW
 
 sub new {
