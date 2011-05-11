@@ -41,7 +41,7 @@ sub process {
     my $two_spaces = q{  };
     # detex zamienia \\ na znak końca wiersza, co psuje zgodność
     # numeracji wierszy, musimy to naprawić
-    `perl -pne 's{$two_backslashes_quoted}{$two_spaces}g' < "$filename" | detex -l - > "$tmp_file"`;
+    `perl -pne 's{$two_backslashes_quoted}{$two_spaces}g; s{ -- }{ -  }g;' < "$filename" | detex -l - > "$tmp_file"`;
 
     # languagetool output has to processed because of some bug in
     # languagetool
