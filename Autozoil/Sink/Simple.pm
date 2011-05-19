@@ -21,7 +21,7 @@ sub add_mistake {
                clean_filename($mistake->{'filename'}) . ' ' . $mistake->{'line_number'},
                $mistake->{'frag'},
                $mistake->{'original_line'},
-               $mistake->{'comment'}),"\n";
+               $mistake->{'comment'}),"\n\n";
 }
 
 sub clean_filename {
