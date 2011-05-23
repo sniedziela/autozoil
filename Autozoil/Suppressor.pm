@@ -12,7 +12,7 @@ sub new {
     my @suppressions = Autozoil::Suppressor::Parser::parse($filename);
 
     my $label_index = create_label_index(@suppressions);
-    
+
     my $self = {
         'label_index' => $label_index,
         'filename' => $filename,
@@ -65,7 +65,7 @@ sub postcheck {
         } elsif ($suppression->{'got'} < $suppression->{'expected'}) {
             $sink->add_mistake({
                 'line_number' => $suppression->{'line_from'},
-                'comment' => qq{two few problems found for suppression '$suppression->{label}' (should be at least $suppression->{expected}, found $suppression->{got})},
+                'comment' => qq{too few problems found for suppression '$suppression->{label}' (should be at least $suppression->{expected}, found $suppression->{got})},
                 'type' => 'suppressor',
                 'label' => 'TOO_FEW_PROBLEMS'});
         }
