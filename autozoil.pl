@@ -11,6 +11,7 @@ binmode(STDOUT,':utf8');
 use Autozoil::Spell;
 use Autozoil::Chktex;
 use Autozoil::Languagetool;
+use Autozoil::Typo;
 use Autozoil::Suppressor;
 use Autozoil::Sink::Simple;
 use Autozoil::Sink::Chain;
@@ -61,7 +62,8 @@ if ($locale =~ /^([^_]+)_/) {
 my @checkers =
     (Autozoil::Spell->new($chain_sink, $spell_dictionaries),
      Autozoil::Chktex->new($chain_sink),
-     Autozoil::Languagetool->new($chain_sink, $lang));
+     Autozoil::Languagetool->new($chain_sink, $lang),
+     Autozoil::Typo->new($chain_sink, $lang));
 
 print "STARTING AUTOZOIL\n";
 
