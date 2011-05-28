@@ -83,5 +83,14 @@ cmp_deeply(
           'label' => 'FORMULA_WITHOUT_PUNCTUATION',
           'frag' => '2 \]',
       },
+      {       
+          'type' => 'typo',
+          'comment' => 'comma should be used as the decimal separator',
+          'line_number' => 24,
+          'beg' => 26,
+          'end' => 26,
+          'label' => 'DECIMAL_SEPARATOR',
+          'frag' => '2.56',
+      },
     ]);
 

@@ -17,6 +17,12 @@ my %VAR_WORDS = (
     'en' => ['variable'],
 );
 
+my %VERSION_WORDS = (
+    'pl' => ['wersja','wersji','wersję','wersją','wersje','wersjami','wersjach','wersjom',
+             'v.', 'ver.', 'Web'],
+    'en' => ['version','v.','ver.','Web'],
+);
+
 my $WORD_REGEXP = '[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]+';
 my $PRE_PUNCTUATION = qr{(?:^|[\s\(,~])};
 
@@ -41,6 +47,7 @@ sub process {
     $self->check_var_words($filtred_all_text);
     $self->check_captions($filtred_all_text);
     $self->check_formula_punctuations($filtred_all_text);
+    $self->check_decimal_separators($filtred_all_text);
 }
 
 sub check_short_words {
@@ -93,6 +100,19 @@ sub check_formula_punctuations {
         'FORMULA_WITHOUT_PUNCTUATION',
         q{formula should end with a punctuation},
         $text);
+}
+
+sub check_decimal_separators {
+    my ($self, $text) = @_;
+
+    my $text_without_versions = $self->filtre_version($text);
+
+    $self->check_with_regex(
+        qr{ $PRE_PUNCTUATION (\d+) (\.) (\d+) }xms,
+        'DECIMAL_SEPARATOR',
+        q{comma should be used as the decimal separator},
+        $text_without_versions);
+
 }
 
 sub check_with_regex {
@@ -157,6 +177,20 @@ sub get_all_text {
     }
 
     return $all_text;
+}
+
+sub filtre_version {
+    my ($self, $text) = @_;
+
+    $text =~ s{ (\d+ ( \. \d+ ){2,} | \\(code|hspace){ [^{}]+ } 
+                 | \d*\.\d+(,-?\d*\.\d+)+ | \d+,-?\d*\.\d+ | \d*\.-?\d+,\d+ )  }{ ' ' x length($1) }egx;
+
+    my $language = $self->{'language'};
+
+    my $ver_words_regex = join('|', @{$VERSION_WORDS{$language}});
+    $text =~ s{ (($ver_words_regex | [A-Z]{2,} | width) (~|[\s\n]+) \d+ \. \d+) }{ ' ' x length($1) }egx;
+
+    return $text;
 }
 
 sub filtre_text {
