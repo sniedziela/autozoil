@@ -11,6 +11,7 @@ binmode(STDOUT,':utf8');
 use Autozoil::Spell;
 use Autozoil::Chktex;
 use Autozoil::Languagetool;
+use Autozoil::LogAnalyser;
 use Autozoil::Typo;
 use Autozoil::Suppressor;
 use Autozoil::Sink::Simple;
@@ -63,7 +64,8 @@ my @checkers =
     (Autozoil::Spell->new($chain_sink, $spell_dictionaries),
      Autozoil::Chktex->new($chain_sink),
      Autozoil::Languagetool->new($chain_sink, $lang),
-     Autozoil::Typo->new($chain_sink, $lang));
+     Autozoil::Typo->new($chain_sink, $lang),
+     Autozoil::LogAnalyser->new($chain_sink));
 
 print "STARTING AUTOZOIL\n";
 
