@@ -51,6 +51,9 @@ if ($locale eq 'pl_PL') {
     $spell_dictionaries = "pl_PL,$iso_dic_name";
     prepare_iso_dic();
 }
+elsif ($locale eq 'en_GB') {
+    $spell_dictionaries = "en_GB,extra-en";
+}
 
 my $lang;
 

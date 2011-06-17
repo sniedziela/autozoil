@@ -5,6 +5,7 @@ use strict;
 
 my %latex_false_positives = map { $_ => 1 } split/\n/,<< 'END_OF_LFP';
 htb
+hbt
 htbp
 H
 hH
