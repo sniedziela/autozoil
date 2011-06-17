@@ -52,7 +52,7 @@ sub process {
 
 sub check_short_words {
     my ($self, $text) = @_;
-    
+
     my $language = $self->{'language'};
 
     my $short_word_regex = join('|', @{$SHORT_WORDS{$language}});
@@ -66,7 +66,7 @@ sub check_short_words {
 
 sub check_var_words {
     my ($self, $text) = @_;
-    
+
     my $language = $self->{'language'};
 
     my $var_word_regex = join('|', @{$VAR_WORDS{$language}});
@@ -107,12 +107,15 @@ sub check_decimal_separators {
 
     my $text_without_versions = $self->filtre_version($text);
 
-    $self->check_with_regex(
-        qr{ $PRE_PUNCTUATION (\d+) (\.) (\d+) }xms,
-        'DECIMAL_SEPARATOR',
-        q{comma should be used as the decimal separator},
-        $text_without_versions);
+    my $language = $self->{'language'};
 
+    if ($language eq 'pl') {
+        $self->check_with_regex(
+            qr{ $PRE_PUNCTUATION (\d+) (\.) (\d+) }xms,
+            'DECIMAL_SEPARATOR',
+            q{comma should be used as the decimal separator},
+            $text_without_versions);
+    }
 }
 
 sub check_with_regex {
@@ -131,8 +134,8 @@ sub check_with_regex {
               ? $column_number + length($in) - 1
               : $column_number);
 
-        my $frag = 
-            ( $in =~ /\n/ 
+        my $frag =
+            ( $in =~ /\n/
               ? $pre
               : $pre.$in.$post );
 
@@ -161,7 +164,7 @@ sub get_line {
         return (1, length($text));
     }
 
-                
+
 }
 
 sub get_all_text {
@@ -182,7 +185,7 @@ sub get_all_text {
 sub filtre_version {
     my ($self, $text) = @_;
 
-    $text =~ s{ (\d+ ( \. \d+ ){2,} | \\(code|hspace){ [^{}]+ } 
+    $text =~ s{ (\d+ ( \. \d+ ){2,} | \\(code|hspace){ [^{}]+ }
                  | \d*\.\d+(,-?\d*\.\d+)+ | \d+,-?\d*\.\d+ | \d*\.-?\d+,\d+ )  }{ ' ' x length($1) }egx;
 
     my $language = $self->{'language'};
