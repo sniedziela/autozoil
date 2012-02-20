@@ -1,4 +1,5 @@
-= autozoil =
+autozoil
+========
 
 Autozoil is a comprehensive checker for texts written in (La)Tex,
 mainly MSc theses and scientific papers. Autozoil has been used for
@@ -13,13 +14,15 @@ powstał przy okazji pisania prac magisterskich pod kierunkiem Filipa
 Gralińskiego na Wydziale Matematyki i Informatyki Uniwersytetu im.
 Adama Mickiewicza w roku akademickim 2010/2011.
 
-== Running / wywołanie ==
+Running / wywołanie
+-------------------
 
     perl autozoil.pl --locale pl_PL tekst_po_polsku.tex
 
     perl autozoil.pl --locale en_GB text_in_english.tex
 
-== Modules / Moduły ==
+Modules / Moduły
+----------------
 
 The following modules are available in autozoil:
 
@@ -43,7 +46,8 @@ Następujące moduły są dostępne w autozoilu:
    zob. http://hunspell.sourceforge.net/)
 * `Typo` - różne proste błędy, np. brakujące twarde spacje.
 
-== Authors / Autorzy ==
+Authors / Autorzy
+-----------------
 
 * Filip Graliński
 * Mirosław Zemski
@@ -52,7 +56,8 @@ Następujące moduły są dostępne w autozoilu:
 * Jan Legutko
 * Kajetan Wilczek
 
-== Suppressing warnings ==
+Suppressing warnings
+--------------------
 
 [Only in Polish for the time being.]
 
