@@ -7,6 +7,7 @@ my %UNWANTED_WARNINGS = map { $_ => 1 } split/\n/,<< 'END_OF_UW';
 1
 12
 13
+36
 END_OF_UW
 
 sub new {
@@ -93,15 +94,15 @@ sub handle_mistake {
 
 sub is_unwanted_warning {
     my ($self, $mistake, $current_line) = @_;
-    
+
     return
-        $UNWANTED_WARNINGS{$mistake->{'label'}} 
+        $UNWANTED_WARNINGS{$mistake->{'label'}}
         || $mistake->{'label'} == 8 && $current_line =~ / -- /
         || $mistake->{'label'} == 26 && $current_line =~ / ,,/
 }
 
 sub unexpected_line {
-   my ($line, $state) = @_; 
+   my ($line, $state) = @_;
 
    die "unexpected line in chktex output: $line [state: $state]";
 }
