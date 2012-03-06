@@ -65,19 +65,20 @@ Czasami istnieje potrzeba "uciszania" błędów zgłaszanych autozoila. W
 związku z tym została wprowadzona możliwość "uciszania" błędów za
 pomocą dwóch konstrukcji:
 
-1) % --|SPECS
+1) `% --|SPECS`
 
 Ucisza wskazane w SPECS błędy w danym, pojedynczym wierszu.
 
 2)
 
-% --<SPECS
-.....
-.....
-.....
-% -->
+    % --<SPECS
+    .....
+    .....
+    .....
+    % -->
 
-Ucisza wskazane w SPECS błędy w całym obszarze. (% --> zamyka "uciszany" obszar).
+Ucisza wskazane w SPECS błędy w całym obszarze. (`% -->` zamyka
+"uciszany" obszar).
 
 (W obu przypadkach między znakiem '%' a '--' może wystąpić dowolna
 liczba spacji - w szczególności zero).
