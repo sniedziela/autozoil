@@ -42,6 +42,7 @@ sub process {
     # detex zamienia \\ na znak końca wiersza, co psuje zgodność
     # numeracji wierszy, musimy to naprawić
     `perl -pne 's{$two_backslashes_quoted}{$two_spaces}g; s{ -- }{ -  }g;' < "$filename" | detex -l - > "$tmp_file"`;
+    $self->check_if_document_class_in_oneline($filename);
 
     # languagetool output has to processed because of some bug in
     # languagetool
@@ -56,12 +57,44 @@ sub process {
     }
 }
 
+sub check_if_document_class_in_oneline {
+    my ($self, $filename) = @_;
+
+    my $sink = $self->{'sink'};
+
+    open my $fh, '<', $filename;
+    binmode($fh, ':utf8');
+
+    my $line_number = 1;
+
+    PRECHECK_LOOP:
+    while (my $line=<$fh>) {
+        chomp $line;
+        if ($line =~ m{^ \s* \\documentclass\[ }x) {
+            if ($line =~ m{ ^ \s* \\documentclass\[ [^\]]* $ }x) {
+                $sink->add_mistake({
+                    'line_number' => $line_number,
+                    'frag' => $line,
+                    'type' => 'grammar',
+                    'comment' =>
+                        '\\documentclass[...] should be written in a single line in order for detex to work correctly',
+                    'label' => 'DOCUMENTCLASS_NOT_IN_SINGLE_LINE'
+                })
+            }
+
+            last PRECHECK_LOOP;
+        }
+
+        ++$line_number;
+    }
+}
+
 sub process_error {
     my ($self, $error) = @_;
 
-    return if 
+    return if
         $error->{'ruleId'} eq 'SKROTY_Z_KROPKA' && $error->{'msg'} =~ /'pl\.'/
-        || 
+        ||
         $error->{'ruleId'} eq 'BRAK_SPACJI' && $error->{'msg'} =~ /': '/
             && $error->{'context'} =~ m{http://};
 
@@ -77,4 +110,3 @@ sub process_error {
         'label' => $error->{'ruleId'},
     });
 }
-
