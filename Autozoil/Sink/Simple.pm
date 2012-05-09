@@ -14,7 +14,7 @@ sub new {
 sub add_mistake {
     my ($self, $mistake) = @_;
 
-    return if $mistake->{'suppressed'};
+    return if $mistake->{'suppressed'} || $mistake->{'unwanted'};
 
     print join(" *** ",
                $mistake->{'type'}.'-'.$mistake->{'label'},

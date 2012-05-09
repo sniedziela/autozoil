@@ -75,7 +75,8 @@ sub postcheck {
 sub try_suppress {
     my ($self, $mistake, $suppression) = @_;
 
-    if (is_number($mistake->{'line_number'})
+    if (!$mistake->{'unwanted'}
+        && is_number($mistake->{'line_number'})
         && is_number($suppression->{'line_from'})
         && is_number($suppression->{'line_to'})
         && $mistake->{'line_number'} >= $suppression->{'line_from'}
