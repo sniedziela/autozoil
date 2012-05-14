@@ -182,16 +182,22 @@ sub get_all_text {
     return $all_text;
 }
 
+sub replace_with_blanks {
+    my ($t) = @_;
+
+    return join('', map { $_ eq "\n" ? "\n" : " " } split//, $t);
+}
+
 sub filtre_version {
     my ($self, $text) = @_;
 
     $text =~ s{ (\d+ ( \. \d+ ){2,} | \\(code|hspace){ [^{}]+ }
-                 | \d*\.\d+(,-?\d*\.\d+)+ | \d+,-?\d*\.\d+ | \d*\.-?\d+,\d+ )  }{ ' ' x length($1) }egx;
+                 | \d*\.\d+(,-?\d*\.\d+)+ | \d+,-?\d*\.\d+ | \d*\.-?\d+,\d+ )  }{ replace_with_blanks($1) }egx;
 
     my $language = $self->{'language'};
 
     my $ver_words_regex = join('|', @{$VERSION_WORDS{$language}});
-    $text =~ s{ (($ver_words_regex | [A-Z]{2,} | width) (~|[\s\n]+) \d+ \. \d+) }{ ' ' x length($1) }egx;
+    $text =~ s{ (($ver_words_regex | [A-Z]{2,} | width) (~|[\s\n]+) \d+ \. \d+) }{ replace_with_blanks($1) }egx;
 
     return $text;
 }
@@ -199,7 +205,7 @@ sub filtre_version {
 sub filtre_text {
     my ($self, $text) = @_;
 
-    $text =~ s/(\A|[^\\])(%[^\n]*)/ $1 . (' ' x length($2))/emsg;
+    $text =~ s/(\A|[^\\])(%[^\n]*)/ $1 . (replace_with_blanks($2))/emsg;
 
     return $text;
 }
